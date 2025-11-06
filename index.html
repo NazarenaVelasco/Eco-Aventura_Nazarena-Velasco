@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco-Aventura: Salva el Planeta</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Pantalla de Bienvenida -->
+    <div id="welcome-screen" class="screen active">
+        <div class="welcome-container">
+            <h1 class="game-title">🌱 Eco-Aventura</h1>
+            <h2 class="game-subtitle">Salva el Planeta</h2>
+            <div class="instructions-box">
+                <h3>📋 Instrucciones</h3>
+                <ul>
+                    <li>Haz clic en los iconos de basura que aparezcan</li>
+                    <li>Tienes <strong>30 segundos</strong> para recolectar basura</li>
+                    <li>Necesitas <strong>150 puntos</strong> para ganar</li>
+                    <li>¡Cada objeto reciclado suma puntos!</li>
+                </ul>
+            </div>
+            <button id="start-btn" class="btn-primary">🎮 ¡Comenzar!</button>
+        </div>
+    </div>
+
+    <!-- Pantalla de Juego -->
+    <div id="game-screen" class="screen">
+        <div class="game-header">
+            <div class="game-stats">
+                <div class="stat-item">
+                    <span class="stat-label">⏱️ Tiempo:</span>
+                    <span id="timer" class="stat-value">30</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">⭐ Puntos:</span>
+                    <span id="score" class="stat-value">0</span>
+                </div>
+            </div>
+        </div>
+        <div id="game-area" class="game-area">
+            <!-- Los iconos de basura aparecerán aquí dinámicamente -->
+        </div>
+    </div>
+
+    <!-- Pantalla de Resultado -->
+    <div id="result-screen" class="screen">
+        <div class="result-container">
+            <h1 id="result-title" class="result-title">¡Resultado!</h1>
+            <div id="result-message" class="result-message"></div>
+            <div id="final-stats" class="final-stats"></div>
+            <button id="restart-btn" class="btn-primary">🔄 Jugar de Nuevo</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
