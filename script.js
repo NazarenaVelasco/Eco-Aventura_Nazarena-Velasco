@@ -103,14 +103,43 @@ function generateTrash() {
     trashElement.dataset.points = trashType.points;
     trashElement.dataset.name = trashType.name;
     
-    // Posición aleatoria
-    const maxX = gameArea.offsetWidth - 80;
-    const maxY = gameArea.offsetHeight - 80;
-    const x = Math.random() * maxX;
-    const y = Math.random() * maxY;
+    // Dimensiones del área de juego (ya está debajo del header de 80px)
+    // El game-area tiene position: fixed y top: 80px, así que las coordenadas
+    // son relativas al game-area mismo, no a la ventana completa
+    const margin = 20; // Margen de 20px desde los bordes del área de degradado
     
+    // Obtener dimensiones reales del área de juego
+    const areaWidth = gameArea.offsetWidth || window.innerWidth;
+    const areaHeight = gameArea.offsetHeight || (window.innerHeight - 80);
+    
+    // Estimar el tamaño del icono basado en el font-size (4em = aproximadamente 64px en desktop, 48px en móvil)
+    // Usamos un valor conservador para asegurar que los iconos no se salgan del área
+    const isMobile = window.innerWidth <= 768;
+    const iconSize = isMobile ? 60 : 80; // Tamaño estimado del icono
+    
+    // Calcular área disponible dentro del game-area (solo área con degradado)
+    // Los iconos deben spawnear dentro del área, respetando los márgenes de 20px
+    // IMPORTANTE: El game-area empieza en top: 80px (debajo del header), así que
+    // las coordenadas Y empiezan en 0 dentro del game-area, no en 80px
+    const minX = margin;
+    const maxX = Math.max(margin + 10, areaWidth - iconSize - margin);
+    const minY = margin; // 20px desde el borde superior del área de degradado
+    const maxY = Math.max(margin + 10, areaHeight - iconSize - margin); // 20px desde el borde inferior
+    
+    // Validar que hay espacio disponible
+    if (maxX <= minX || maxY <= minY) {
+        console.warn('Área de juego demasiado pequeña para spawnear iconos');
+        return;
+    }
+    
+    // Generar posición aleatoria dentro del área disponible (solo área con degradado)
+    const x = Math.random() * (maxX - minX) + minX;
+    const y = Math.random() * (maxY - minY) + minY;
+    
+    // Establecer posición antes de agregar al DOM para evitar parpadeo
     trashElement.style.left = `${x}px`;
     trashElement.style.top = `${y}px`;
+    trashElement.style.visibility = 'visible';
     
     // Evento de clic
     trashElement.addEventListener('click', () => collectTrash(trashElement));
