@@ -1,0 +1,392 @@
+/* Reset y configuración base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Efecto de fondo animado */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(76, 175, 80, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(33, 150, 243, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(139, 195, 74, 0.2) 0%, transparent 50%);
+    animation: backgroundMove 20s ease-in-out infinite;
+    z-index: 0;
+}
+
+@keyframes backgroundMove {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-20px, -20px); }
+}
+
+/* Sistema de pantallas */
+.screen {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 1;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.screen.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Pantalla de juego: no usar flex centrado, permitir layout libre */
+#game-screen.active {
+    display: block;
+    background: transparent;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Pantalla de Bienvenida */
+.welcome-container {
+    text-align: center;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 30px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-width: 600px;
+    width: 90%;
+    animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.game-title {
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 3.5em;
+    color: #2e7d32;
+    margin-bottom: 10px;
+    text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.1);
+    animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.game-subtitle {
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 2em;
+    color: #1976d2;
+    margin-bottom: 30px;
+}
+
+.instructions-box {
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+    border-radius: 20px;
+    padding: 25px;
+    margin: 30px 0;
+    border: 3px solid #4caf50;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.instructions-box h3 {
+    font-family: 'Luckiest Guy', cursive;
+    color: #1b5e20;
+    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+
+.instructions-box ul {
+    list-style: none;
+    text-align: left;
+}
+
+.instructions-box li {
+    padding: 10px 0;
+    font-size: 1.1em;
+    color: #2e7d32;
+    font-weight: 600;
+    position: relative;
+    padding-left: 30px;
+}
+
+.instructions-box li::before {
+    content: '♻️';
+    position: absolute;
+    left: 0;
+}
+
+/* Botones */
+.btn-primary {
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.3em;
+    font-weight: 700;
+    padding: 15px 40px;
+    background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(76, 175, 80, 0.6);
+    background: linear-gradient(135deg, #66bb6a 0%, #81c784 100%);
+}
+
+.btn-primary:active {
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 3px 10px rgba(76, 175, 80, 0.4);
+}
+
+/* Pantalla de Juego */
+/* Ocultar header y game-area cuando el game-screen no está activo */
+#game-screen:not(.active) .game-header,
+#game-screen:not(.active) .game-area {
+    display: none;
+}
+
+.game-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    padding: 0 20px;
+    background: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-stats {
+    display: flex;
+    justify-content: space-around;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.3em;
+}
+
+.stat-label {
+    font-weight: 700;
+    color: #2e7d32;
+}
+
+.stat-value {
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 1.5em;
+    color: #1976d2;
+    min-width: 60px;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.game-area {
+    width: 100%;
+    height: calc(100vh - 80px);
+    position: fixed;
+    top: 80px;
+    left: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* Efecto de fondo animado para el área de juego */
+.game-area::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(76, 175, 80, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(33, 150, 243, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(139, 195, 74, 0.2) 0%, transparent 50%);
+    animation: backgroundMove 20s ease-in-out infinite;
+    z-index: 0;
+}
+
+/* Iconos de basura */
+.trash-item {
+    position: absolute;
+    font-size: 4em;
+    cursor: pointer;
+    user-select: none;
+    animation: appear 0.3s ease-out, float 3s ease-in-out infinite;
+    transition: transform 0.2s ease;
+    z-index: 10;
+    pointer-events: auto;
+}
+
+.trash-item:hover {
+    transform: scale(1.2) rotate(10deg);
+    filter: drop-shadow(0 0 10px rgba(255, 235, 59, 0.8));
+}
+
+.trash-item:active {
+    transform: scale(0.9) rotate(-10deg);
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: scale(0) rotate(0deg);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) rotate(360deg);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.trash-item.clicked {
+    animation: collect 0.5s ease-out forwards;
+}
+
+@keyframes collect {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(2) translateY(-100px);
+        opacity: 0;
+    }
+}
+
+/* Pantalla de Resultado */
+.result-container {
+    text-align: center;
+    padding: 50px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 30px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-width: 600px;
+    width: 90%;
+    animation: slideUp 0.6s ease-out;
+}
+
+.result-title {
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+.result-title.win {
+    color: #4caf50;
+    text-shadow: 3px 3px 0px rgba(76, 175, 80, 0.3);
+    animation: celebrate 0.6s ease-out;
+}
+
+.result-title.lose {
+    color: #f44336;
+    text-shadow: 3px 3px 0px rgba(244, 67, 54, 0.3);
+}
+
+@keyframes celebrate {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    25% { transform: scale(1.1) rotate(-5deg); }
+    75% { transform: scale(1.1) rotate(5deg); }
+}
+
+.result-message {
+    font-size: 1.5em;
+    color: #424242;
+    margin: 20px 0;
+    line-height: 1.6;
+    font-weight: 600;
+}
+
+.final-stats {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 30px 0;
+    border: 2px solid #2196f3;
+}
+
+.final-stats p {
+    font-size: 1.2em;
+    color: #1976d2;
+    margin: 10px 0;
+    font-weight: 700;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .game-title {
+        font-size: 2.5em;
+    }
+    
+    .game-subtitle {
+        font-size: 1.5em;
+    }
+    
+    .trash-item {
+        font-size: 3em;
+    }
+    
+    .stat-item {
+        font-size: 1em;
+    }
+    
+    .stat-value {
+        font-size: 1.2em;
+    }
+}
+
